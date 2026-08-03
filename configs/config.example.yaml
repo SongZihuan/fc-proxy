@@ -1,0 +1,28 @@
+# 本地 HTTP 监听地址，浏览器直接访问 http://127.0.0.1:8080/...
+listen: "127.0.0.1:8080"
+
+target:
+  # 目标服务器域名或 IP，例如阿里云 FC 的 HTTP 触发器域名
+  host: "1234567890.cn-hangzhou.fc.aliyuncs.com"
+  # 请求类型：https（默认，推荐，访问 FC 必须用 HTTPS 保证安全）| http
+  scheme: https
+  # 请求头 Host，默认 = target.host
+  # host_header: ""
+  # TLS SNI，默认 = target.host（scheme=http 时忽略）
+  # sni: ""
+
+# 请求规则：按 URL path 顺序匹配，只命中第一条；无 path_regex 的是兜底规则
+request_rules:
+  # 兜底规则：给所有请求注入固定 Token 鉴权头
+  - set_headers:
+      Authorization: "Bearer your-fixed-token"
+    # delete_headers:
+    #   - "Cookie"
+
+# 响应规则：同样按 path 匹配第一条
+response_rules:
+  # 兜底规则：把 FC 默认的 Content-Disposition 改成 inline，让浏览器直接预览而非下载
+  - set_headers:
+      Content-Disposition: "inline"
+    # delete_headers:
+    #   - "Content-Disposition"
