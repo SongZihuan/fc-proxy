@@ -44,6 +44,7 @@ go vet ./...                          # 静态检查
 - 面向错误的处理风格：配置加载时做全部校验和正则预编译，运行期不再处理编译错误。
 - 规则语义：`path_regex` 为空字符串表示兜底规则（内部表示为 `regex == nil`）；只有第一条命中的规则生效；`set_headers` 与 `delete_headers` 同名时以 set 为准。
 - 修改配置结构时，同步更新 `configs/config.example.yaml` 的注释和本文件。
+- Git 提交信息使用 conventional commits 格式（`feat:`/`fix:` 等前缀），描述用中文；仅仓库首个提交固定使用英文 "feat: initial project struct"。
 
 ## 测试策略
 
