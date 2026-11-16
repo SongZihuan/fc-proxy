@@ -26,3 +26,10 @@ go.work.sum
 # ---- IDE ----
 .idea/
 .vscode/
+
+# ---- AI 工具本地配置与生成文档 ----
+.qoder/
+.qoder-cn/
+.claude/
+.codex/
+.agents/

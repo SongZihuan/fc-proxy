@@ -26,7 +26,7 @@
 - `internal/proxy/proxy.go` — `NewHandler` 基于 `httputil.ReverseProxy` 构建代理：改写 scheme/host/Host 头、应用请求规则（`Rewrite`）与响应规则（`ModifyResponse`）；`NewHandlerWithTransport` 供测试注入 Transport。
 - 各包内的 `*_test.go` — 与源文件对应的测试（见下文）。
 - `configs/config.example.yaml` — 配置模板，注释即文档，修改配置字段时需同步更新。
-- `configs/personal-website.yaml` — 作者自用的真实配置（含真实 token），已被 `.gitignore` 排除，不要当作测试 fixture 修改或提交变更。
+- 本地配置文件 — 可能包含真实 token，已按路径模式被 `.gitignore` 排除；不要当作测试 fixture 修改或提交变更。
 - `.gitignore` — 参考 GitHub 官方 Go 模板：忽略编译产物、测试/覆盖率输出、IDE 与 macOS 杂物；本地配置按模式忽略（`/proxy.yaml`、`/configs/*.yaml`），仅保留 `configs/config.example.yaml` 示例模板。
 
 ## 构建与测试命令
@@ -57,6 +57,6 @@ go vet ./...                          # 静态检查
 
 ## 安全注意事项
 
-- `configs/personal-website.yaml` 等本地配置包含真实 Bearer token，已被 `.gitignore` 排除；不要在代码、测试或提交中泄露这类凭据。
+- 本地配置可能包含真实 Bearer token，应保存在 `.gitignore` 已忽略的路径中（如 `/proxy.yaml`）；不要在代码、测试或提交中泄露这类凭据。
 - 上游连接强制 TLS 1.2+ 并做证书校验（测试除外）；`scheme: http` 仅用于本地调试。
 - 代理会把客户端请求头原样转发，规则里注入的鉴权头对本地监听地址上的任何调用者都生效——`listen` 应绑定到 `127.0.0.1` 等可信地址。
